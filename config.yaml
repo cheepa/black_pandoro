@@ -1,0 +1,56 @@
+# =============================
+# config.yaml (v1.1 - Corrigido)
+# =============================
+
+# Parametrização central do projeto. Todos os scripts Python usam
+# estes parâmetros como valores padrão. Você pode sobrescrevê-los
+# a qualquer momento via argumentos na linha de comando (CLI).
+# -------------------------------------------------------------------
+# Para mudar datas, timeframe ou hiperparâmetros, basta editar
+# este arquivo — não é necessário tocar no código-fonte.
+
+# ----------------------- SEÇÃO DE DADOS ----------------------------
+data:
+  # Caminho para um arquivo Parquet ÚNICO.
+  # Se este valor for preenchido, ele terá prioridade sobre 'parquet_dir'.
+  parquet: "data/tick_data_2024.parquet"
+
+  # Diretório contendo múltiplos arquivos Parquet (ex: particionado por ano/mês).
+  # Deixe como 'null' se estiver usando um arquivo único em 'parquet'.
+  parquet_dir: null
+
+  # Timeframe para agregar os ticks em candles.
+  # Aceita qualquer formato de frequência do Pandas: "5s", "1min", "15min", "1H", etc.
+  timeframe: "1min"
+
+  # Janela de tempo para filtrar os dados dentro do arquivo Parquet.
+  # Formato: "AAAA-MM-DD"
+  start: "2024-01-01"
+  end:   "2024-12-31"
+
+# ---------------------- SEÇÃO DE MODELO ---------------------------
+model:
+  # Arquitetura a ser utilizada: "transformer" ou "lstm"
+  type: "transformer"
+
+  # Número de candles (passos de tempo) a serem usados como entrada para prever o futuro.
+  look_back: 60
+
+  # Horizonte de previsão em número de candles. (1 = prever o próximo candle).
+  target_shift: 1
+
+# --------------------- SEÇÃO DE TREINAMENTO -----------------------
+training:
+  # Número máximo de épocas para o treinamento.
+  epochs: 20
+
+  # Tamanho do lote (batch size).
+  batch_size: 64
+
+  # Proporções para divisão do dataset (baseado na ordem cronológica).
+  test_size: 0.20   # 20% finais dos dados para teste.
+  val_size: 0.10    # 10% dos dados de treino para validação.
+
+  # Paciência para o Early Stopping: número de épocas sem melhora na 'val_loss'
+  # antes de parar o treino.
+  patience: 8

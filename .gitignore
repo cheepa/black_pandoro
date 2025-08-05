@@ -1,0 +1,18 @@
+# Ambiente Virtual
+.venv/
+
+# Arquivos do PyCharm
+.idea/
+
+# Caches do Python
+__pycache__/
+*.pyc
+
+# Pasta de artefatos gerados
+artifacts/
+
+# Arquivos de dados grandes (não devem ir para o Git)
+*.csv
+*.parquet
+*.h5
+*.pkl
